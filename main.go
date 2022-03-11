@@ -11,21 +11,21 @@ import (
 	"gorm.io/gorm"
 )
 
-func startService(reqHandler *handlers.RequestHandler) {
+func startService(reqHandler *handlers.ServiceStatusHandler) {
 	e := echo.New()
 
 	// Middleware
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 	// Routes
-	e.POST("/registry/statuses", reqHandler.RegisterServiceStatus)
+	e.POST("/registry/statuses", reqHandler.Create)
 
 	// Start server
 	e.Logger.Fatal(e.Start(":1323"))
 }
 
 func main() {
-	db, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+	db, err := gorm.Open(sqlite.Open("coordinator.db"), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
@@ -33,6 +33,6 @@ func main() {
 	(&models.Models{DB: db}).AutoMigrate()
 
 	reg := &services.Registry{DB: db}
-	handler := &handlers.RequestHandler{Registry: reg}
+	handler := &handlers.ServiceStatusHandler{Registry: reg}
 	startService(handler)
 }

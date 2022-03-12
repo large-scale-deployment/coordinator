@@ -1,7 +1,7 @@
 package services
 
 import (
-	"lss/coordinator/models"
+	"large-scale-deployment/coordinator/models"
 
 	"gorm.io/gorm"
 )

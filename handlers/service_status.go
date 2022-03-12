@@ -1,8 +1,8 @@
 package handlers
 
 import (
-	"lss/coordinator/models"
-	"lss/coordinator/services"
+	"large-scale-deployment/coordinator/models"
+	"large-scale-deployment/coordinator/services"
 	"net/http"
 	"strconv"
 

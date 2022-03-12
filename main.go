@@ -1,9 +1,9 @@
 package main
 
 import (
-	"lss/coordinator/handlers"
-	"lss/coordinator/models"
-	"lss/coordinator/services"
+	"large-scale-deployment/coordinator/handlers"
+	"large-scale-deployment/coordinator/models"
+	"large-scale-deployment/coordinator/services"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"

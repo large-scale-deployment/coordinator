@@ -11,7 +11,10 @@ type Registry struct {
 }
 
 // ReverseRunes returns its argument string reversed rune-wise left to right.
-func (reg *Registry) ReportServiceStatus(serviceStatus *models.ServiceStatus) uint {
-	reg.DB.Create(serviceStatus)
-	return serviceStatus.ID
+func (reg *Registry) ReportServiceStatus(ssData *models.ServiceStatusData) uint {
+	serviceStatusObject := &models.ServiceStatus{
+		ServiceStatusData: *ssData,
+	}
+	reg.DB.Create(serviceStatusObject)
+	return serviceStatusObject.ID
 }

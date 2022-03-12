@@ -11,13 +11,7 @@ import (
 
 // ServiceStatus
 type ReqServiceStatus struct {
-	Name         string `json:"name" form:"name" query:"name"`          // Service name
-	Version      string `json:"version" form:"version" query:"version"` // Service version
-	Group        string `json:"group" form:"group" query:"group"`       // Deployment group
-	NodeName     string `json:"node_name" form:"node_name" query:"node_name"`
-	PodIp        string `json:"pod_ip" form:"pod_ip" query:"pod_ip"`
-	PodName      string `json:"pod_name" form:"pod_name" query:"pod_name"`
-	PodNamespace string `json:"pod_namespace" form:"pod_namespace" query:"pod_namespace"`
+	models.ServiceStatusData
 }
 
 type ServiceStatusHandler struct {
@@ -30,15 +24,15 @@ func (handler *ServiceStatusHandler) Create(c echo.Context) (err error) {
 	if err = c.Bind(ss); err != nil {
 		return err
 	}
-	serviceStatus := &models.ServiceStatus{
+	ssData := &models.ServiceStatusData{
 		Name:         ss.Name,
 		Version:      ss.Version,
 		Group:        ss.Group,
 		NodeName:     ss.NodeName,
-		PodIp:        ss.PodIp,
+		PodIP:        ss.PodIP,
 		PodName:      ss.PodName,
 		PodNamespace: ss.PodNamespace,
 	}
-	ID := handler.Registry.ReportServiceStatus(serviceStatus)
+	ID := handler.Registry.ReportServiceStatus(ssData)
 	return c.String(http.StatusCreated, strconv.FormatUint(uint64(ID), 10))
 }

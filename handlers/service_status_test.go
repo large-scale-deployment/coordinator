@@ -1,13 +1,14 @@
 package handlers
 
 import (
-	"large-scale-deployment/coordinator/models"
-	"large-scale-deployment/coordinator/services"
 	"net/http"
 	"net/http/httptest"
 	"regexp"
 	"strings"
 	"testing"
+
+	"github.com/large-scale-deployment/coordinator/models"
+	"github.com/large-scale-deployment/coordinator/services"
 
 	"github.com/labstack/echo/v4"
 	"github.com/stretchr/testify/assert"
@@ -18,10 +19,11 @@ import (
 var (
 	spacesRegexp = regexp.MustCompile(`[\n\t]`)
 	statusJSON   = spacesRegexp.ReplaceAllString(`{
-"name":"My Go Service",
+        "name":"My Go Service",
         "version":"1.0",
         "group":"Group 11",
         "node_name":"node name 1",
+        "host_ip":"192.168.1.1",
         "pod_ip":"192.168.8.8",
         "pod_name":"pod-name-xxx",
         "pod_namespace":"default"

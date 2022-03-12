@@ -12,6 +12,7 @@ type ServiceStatusData struct {
 	Version      string `json:"version" form:"version" query:"version"` // Service version
 	Group        string `json:"group" form:"group" query:"group"`       // Deployment group
 	NodeName     string `json:"node_name" form:"node_name" query:"node_name"`
+	HostIP       string `json:"host_ip" form:"host_ip" query:"host_ip"`
 	PodIP        string `json:"pod_ip" form:"pod_ip" query:"pod_ip"`
 	PodName      string `json:"pod_name" form:"pod_name" query:"pod_name"`
 	PodNamespace string `json:"pod_namespace" form:"pod_namespace" query:"pod_namespace"`

@@ -1,10 +1,11 @@
 package handlers
 
 import (
-	"large-scale-deployment/coordinator/models"
-	"large-scale-deployment/coordinator/services"
 	"net/http"
 	"strconv"
+
+	"github.com/large-scale-deployment/coordinator/models"
+	"github.com/large-scale-deployment/coordinator/services"
 
 	"github.com/labstack/echo/v4"
 )
@@ -29,6 +30,7 @@ func (handler *ServiceStatusHandler) Create(c echo.Context) (err error) {
 		Version:      ss.Version,
 		Group:        ss.Group,
 		NodeName:     ss.NodeName,
+		HostIP:       ss.HostIP,
 		PodIP:        ss.PodIP,
 		PodName:      ss.PodName,
 		PodNamespace: ss.PodNamespace,

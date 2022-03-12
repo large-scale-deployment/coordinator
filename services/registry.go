@@ -1,7 +1,7 @@
 package services
 
 import (
-	"large-scale-deployment/coordinator/models"
+	"github.com/large-scale-deployment/coordinator/models"
 
 	"gorm.io/gorm"
 )

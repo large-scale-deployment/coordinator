@@ -1,4 +1,4 @@
-module lss/coordinator
+module large-scale-deployment/coordinator
 
 go 1.17
 

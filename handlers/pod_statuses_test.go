@@ -3,7 +3,6 @@ package handlers
 import (
 	"net/http"
 	"net/http/httptest"
-	"regexp"
 	"strings"
 	"testing"
 
@@ -17,23 +16,19 @@ import (
 )
 
 var (
-	spacesRegexp      = regexp.MustCompile(`[\n\t]`)
-	serviceStatusJSON = spacesRegexp.ReplaceAllString(`{
-        "name":"My Go Service",
-        "version":"1.0",
-        "group":"Group 11",
-        "node_name":"node name 1",
-        "host_ip":"192.168.1.1",
-        "pod_ip":"192.168.8.8",
-        "pod_name":"pod-name-xxx",
-        "pod_namespace":"default"
-    }`, "")
+	podStatusJSON = `{
+        "name":"Pod Status 1",
+        "pod_schedualed_at":"2022-03-13T08:07:47Z",
+        "initialized_at":"2022-03-14T09:07:47Z",
+        "containers_ready_at":"2022-03-14T10:07:47Z",
+        "ready_at":"2022-03-14T11:07:47Z"
+    }`
 )
 
-func TestRegisterServiceStatus(t *testing.T) {
+func TestRegisterPodStatus(t *testing.T) {
 	// Setup
 	e := echo.New()
-	req := httptest.NewRequest(http.MethodPost, "/registry/service_statuses", strings.NewReader(serviceStatusJSON))
+	req := httptest.NewRequest(http.MethodPost, "/registry/pod_statuses", strings.NewReader(podStatusJSON))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
@@ -46,7 +41,7 @@ func TestRegisterServiceStatus(t *testing.T) {
 	m := &models.Models{DB: db}
 	m.AutoMigrate()
 	registry := &services.Registry{DB: m.DB}
-	h := &ServiceStatusHandler{Registry: registry}
+	h := &PodStatusHandler{Registry: registry}
 
 	// Assertions
 	if assert.NoError(t, h.Create(c)) {

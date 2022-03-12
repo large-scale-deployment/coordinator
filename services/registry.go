@@ -10,11 +10,18 @@ type Registry struct {
 	DB *gorm.DB
 }
 
-// ReverseRunes returns its argument string reversed rune-wise left to right.
 func (reg *Registry) ReportServiceStatus(ssData *models.ServiceStatusData) uint {
 	serviceStatusObject := &models.ServiceStatus{
 		ServiceStatusData: *ssData,
 	}
 	reg.DB.Create(serviceStatusObject)
 	return serviceStatusObject.ID
+}
+
+func (reg *Registry) ReportPodStatus(psData *models.PodStatusData) uint {
+    podStatusObject := &models.PodStatus{
+        PodStatusData: *psData,
+    }
+    reg.DB.Create(podStatusObject)
+    return podStatusObject.ID
 }

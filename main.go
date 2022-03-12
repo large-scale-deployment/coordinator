@@ -11,17 +11,19 @@ import (
 	"gorm.io/gorm"
 )
 
-func startService(reqHandler *handlers.ServiceStatusHandler) {
-	e := echo.New()
+func startService(ssHandler *handlers.ServiceStatusHandler, psHandler *handlers.PodStatusHandler) {
 
-	// Middleware
-	e.Use(middleware.Logger())
-	e.Use(middleware.Recover())
-	// Routes
-	e.POST("/registry/statuses", reqHandler.Create)
+    e := echo.New()
 
-	// Start server
-	e.Logger.Fatal(e.Start(":1323"))
+    // Middleware
+    e.Use(middleware.Logger())
+    e.Use(middleware.Recover())
+    // Routes
+    e.POST("/registry/service_statuses", ssHandler.Create)
+    e.POST("/registry/pod_statuses", psHandler.Create)
+
+    // Start server
+    e.Logger.Fatal(e.Start(":1323"))
 }
 
 func main() {
@@ -33,6 +35,7 @@ func main() {
 	(&models.Models{DB: db}).AutoMigrate()
 
 	reg := &services.Registry{DB: db}
-	handler := &handlers.ServiceStatusHandler{Registry: reg}
-	startService(handler)
+	ssHandler := &handlers.ServiceStatusHandler{Registry: reg}
+	psHandler := &handlers.PodStatusHandler{Registry: reg}
+	startService(ssHandler, psHandler)
 }
